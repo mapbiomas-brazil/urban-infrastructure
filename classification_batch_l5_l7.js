@@ -1,30 +1,34 @@
 var class_lib = require('users/dyedenm/urban:mapbiomas-c4/classification_lib');
 var index_lib = require('users/dyedenm/urban:mapbiomas-c4/index_lib');
 var indexes = require("users/diegosilva/TerrasMonitoramento:Indexes.js");
-var year = 2013;
+var year = 1985;
 var getCollection = require("users/diegosilva/floresta-densa:Collection.js");
-var samples_noturban = ee.FeatureCollection('projects/mapbiomas-workspace/AMOSTRAS/INFRAURBANA_COL4/samples_noturban_carta/samples_noturban_' + String(2018));
+var samples_noturban = ee.FeatureCollection('projects/mapbiomas-workspace/AMOSTRAS/INFRAURBANA_COL4/samples_noturban_carta/samples_noturban_' + String(year));
 var samples_urban = ee.FeatureCollection("projects/mapbiomas-workspace/AMOSTRAS/INFRAURBANA_COL4/samples_urban_carta/samples_urban_2018");
 var cartas_hex_col = ee.FeatureCollection("users/dyedenm/mapbiomas/infraurbana_c4/vectors/cartas_hex");
 var rename = require("users/diegosilva/floresta-densa:RenameBands.js");
 var cartas_col = ee.FeatureCollection('projects/mapbiomas-workspace/AUXILIAR/cartas');
-function cloudMaskL8(image) {
-    // Bits 3 and 5 are cloud shadow and cloud, respectively.
-    var cloudShadowBitMask = 1 << 3;
-    var cloudsBitMask = 1 << 5;
-  
-    // Get the pixel QA band.
+var cloudMaskL57 = function(image) {
     var qa = image.select('pixel_qa');
+    var atmos = image.select('sr_atmos_opacity');
+    // If the cloud bit (5) is set and the cloud confidence (7) is high
+    // or the cloud shadow bit is set (3), then it's a bad pixel.
+    var cloud = qa.bitwiseAnd(1 << 5)
+            .and(qa.bitwiseAnd(1 << 7))
+            .or(qa.bitwiseAnd(1 << 3));
+            
+    // Remove edge pixels that don't occur in all bands
+    var mask2 = image.mask().reduce(ee.Reducer.min());
+    
+    var mask3 = qa.bitwiseAnd(1 << 5);
+    
+    var mask4 = atmos.gt(200);
+    
+    return image.updateMask(cloud.not()).updateMask(mask2).updateMask(mask3.not()).updateMask(mask4.not());
   
-    // Both flags should be set to zero, indicating clear conditions.
-    var mask = qa.bitwiseAnd(cloudShadowBitMask).eq(0)
-        .and(qa.bitwiseAnd(cloudsBitMask).eq(0));
-  
-    // Return the masked image, scaled to TOA reflectance, without the QA bands.
-    return image.updateMask(mask)
-        .copyProperties(image, ["system:time_start"]);
-  }
-var bands = rename.rename("l8");
+  };
+  var bandsl5 = rename.rename("l5_7");
+  var bandsl7 = rename.rename("l5_7");
 var bandsRF = ['blue', 'bu', 'evi', 'green', 'mndwi', 'ndbi', 'ndvi', 'nir', 'red', 
             'swir1', 'swir2', 'ui','gv', 'npv', 'soil','cloud','shade','gvs'];
 var listGrid_1 = ['NA-20-X-A',
@@ -537,19 +541,42 @@ listGrid_1.forEach(function(grid){
           'npoints':npoints
         });
       });
-    var objCollection = {
-        'collectionid':'LANDSAT/LC08/C01/T1_SR',
+      var objCollection_5 = {
+        'collectionid':'LANDSAT/LT05/C01/T1_SR', 
+        //'LANDSAT/LC08/C01/T1_SR',
         'geometry': carta_hex.geometry(),
         'dateStart': String(year) + '-01-01',
         'dateEnd': String(year + 1) + '-01-01',
         'cloud_cover': 60,
     };
+    
+        var objCollection_7 = {
+        'collectionid':'LANDSAT/LE07/C01/T1_SR', 
+        //'LANDSAT/LC08/C01/T1_SR',
+        'geometry': carta_hex.geometry(),
+        'dateStart': String(year) + '-01-01',
+        'dateEnd': String(year + 1) + '-01-01',
+        'cloud_cover': 60,
+    };
+    /*print('dateStart',objCollection.dateStart);
+    print('dateEnd',objCollection.dateEnd);*/
 
-    var collection = getCollection.getCollection(objCollection).select(bands.bandNames, bands.newNames)
+    var collection_5 = getCollection.getCollection(objCollection_5)
+                      .select(bandsl5.bandNames, bandsl5.newNames)
                         .map(function(image){
                             return image.clip(carta_hex.geometry());
                         });
-    var colmask = collection.map(cloudMaskL8);
+                        
+      var collection_7 = getCollection.getCollection(objCollection_7)
+                        .select(bandsl7.bandNames, bandsl7.newNames)
+                        .map(function(image){
+                            return image.clip(carta_hex.geometry());
+                        });
+
+    //print('collection_5',collection_5.size());
+    //print('collection_7',collection_7.size());
+
+    var colmask = collection_7.merge(collection_5).map(cloudMaskL57);
     var mosaic = ee.Image(colmask.median());
     var mosaicNDFI = ee.Image(indexes.getSMA(mosaic));
     mosaicNDFI =  ee.Image(indexes.getNDFI(mosaicNDFI));
