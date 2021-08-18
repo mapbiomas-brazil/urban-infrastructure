@@ -16,11 +16,11 @@ This repository contains the information used in Mapbiomas Collection 6: Uurban 
 
 # How to use
 ## Basics
-Some basic steps are necessary before starting programming. They are:
-Create an account in Google Earth Engine (GEE) platform. It can be done here https://earthengine.google.com/
-Create a GEE repository in the code editor and upload the modules in it. 
+Some basic steps are necessary before starting programming. They are:<br/> 
+- Create an account in Google Earth Engine (GEE) platform. It can be done here https://earthengine.google.com/<br/>
+- Create a GEE repository in the code editor and upload the modules in it. <br/>
 
-The modules necessary are shown in Tables 1 and 2.
+The modules necessary are shown in Tables 1 and 2.<br/>
 
 _Table 1 - Classification codes utilized in collection 6._
 |Classification codes| Description
