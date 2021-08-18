@@ -108,7 +108,7 @@ _Table 5 - Temporal filters._
 |**temporal_filter-5.js**| This filter (TF5) considers results from TF4. <br/> The image results are saved as String(year) + '-gr5-1'
 
 # Visualization codes
-For each filter you can put the map on screen through a simple function exemplified below. You have to define a list of years and also 
+For each filter you can put the map on screen through a simple function exemplified below. You have to define a list of years and also the assets where you saved the results.
 
 ```javascript
 var FT_result = "write here the asset address of the image Collection considered"
