@@ -7,7 +7,6 @@
     <h1 class="title toc-ignore">Urban Area</h1>
 </div>
 
-# Urban area 
 Developed by MapBiomas Urban Area Mapping Group, composed of students and researchers from:
 (in development)
 
