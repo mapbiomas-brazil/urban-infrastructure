@@ -93,7 +93,7 @@ The temporal filter consists of a method to improve classification consistency o
 
 Both the input asset and export image address have to be adjusted to each user and team. In general terms, the images from each step result are saved in an Image Collection named as:
 
-String(year) + '-grN-V',  <br/>
+String(year) + '-grN_V',  <br/>
 where gr = ‘general rule’, N = temporal filter order, and V=version.
 
 The same Image Collection is used to save all images from TF results. For each case, a list of years is considered as ‘initial years’, ‘mid years’ and ‘last years’. This segmentation is necessary to enable specific consistency rules.
