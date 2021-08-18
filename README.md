@@ -46,14 +46,14 @@ _Table 2 - Post classification codes: spatial and temporal filters._
 We have also provided a Google Form where users can inform their improvements and bugs identified. Feel free to use it. The link is: https://forms.gle/BJZbeZjYA5prQYACA 
 
 ## Other information
-Considering that the Brazilian territory is quite extensive, the classification of urban areas requires computational resources beyond the available GEE memory limits. For processing, the Urban Areas reference is selected through land use and land cover samples, composed of randomly distributed points, which contain information (eg., spectral indices) about the class to which they belong.
-To get around the problem of the GEE processing limit, the territory was divided into 439 polygons, according to the Millionth Map of the World. These polygons were divided into five groups that can be processed separately.
-Occasionally, failures can occur due to overflowing the memory limit; lack of cloudless images for each year; or for problems related to Landsat 7. For cases of memory extrapolation, the procedure was repeated only for the polygons that presented this problem. If the fault remained, only Landsat 5 images were used, from 2000 to 2009. The other cases were later corrected in the temporal filter.
+Considering that the Brazilian territory is quite extensive, the classification of urban areas requires computational resources beyond the available GEE memory limits. For processing, the Urban Areas reference is selected through land use and land cover samples, composed of randomly distributed points, which contain information (eg., spectral indices) about the class to which they belong. <br/>
+To get around the problem of the GEE processing limit, the territory was divided into 439 polygons, according to the Millionth Map of the World. These polygons were divided into five groups that can be processed separately. <br/>
+Occasionally, failures can occur due to overflowing the memory limit; lack of cloudless images for each year; or for problems related to Landsat 7. For cases of memory extrapolation, the procedure was repeated only for the polygons that presented this problem. If the fault remained, only Landsat 5 images were used, from 2000 to 2009. The other cases were later corrected in the temporal filter. <br/>
 At the end, the classified images corresponding to each polygon composed a single raster file per year, where each pixel represents the probability of being an urban area.
 
 # Start classification
 ## Start processing the classification_batch_l5_l7.js script (for the years 1985 - 2013)
-In this script, the classification process using Random Forest is carried out, using images from 1985 to 2013. In it, the user must manually change the year variable to generate an image of the probability of a given pixel being an urban area.
+In this script, the classification process using Random Forest is carried out, using images from 1985 to 2013. In it, the user must manually change the year variable to generate an image of the probability of a given pixel being an urban area. <br/>
 These images will be inserted into an Image Collection, the same one that will be used in the following script
 
 ## Start processing the classification_batch_l8.js script (for the years 2013 - 2019)
@@ -85,11 +85,11 @@ merge_collections.jsThe results from each spatial filter are saved in an image C
 
 **Code: merge_collections.js**
 
-In this script, the addresses of image collections used in the spatial filters in the variables img1 and img2 are indicated. Then the script will join the products of each spatial filter iterating by year.
+In this script, the addresses of image collections used in the spatial filters in the variables img1 and img2 are indicated. Then the script will join the products of each spatial filter iterating by year. <br/>
 The result is an image collection containing large and small municipalities. This product will be submitted to the temporal filter
 
 ## Start temporal filter
-The temporal filter consists of a method to improve classification consistency over the years. We developed an array of simple codes applied in a stepwise sense. Each of them operates according to results obtained from the previous one. We encourage you to consider accessing the ATBD documentation to clarify the kernel concept adopted here. The main points of the code are explained in Table 5.
+The temporal filter consists of a method to improve classification consistency over the years. We developed an array of simple codes applied in a stepwise sense. Each of them operates according to results obtained from the previous one. We encourage you to consider accessing the ATBD documentation to clarify the kernel concept adopted here. The main points of the code are explained in Table 5. <br/>
 
 Both the input asset and export image address have to be adjusted to each user and team. In general terms, the images from each step result are saved in an Image Collection named as:
 
