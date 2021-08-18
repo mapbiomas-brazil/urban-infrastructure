@@ -30,6 +30,7 @@ _Table 1 - Classification codes utilized in collection 6._
 **index_lib.js** | Generates a library of images indexes.
 **indexes.js** | Generates a library of images indexes.
 **rename_bands.js**| Code to rename bands through classification bachtes codes.
+<br/>
 
 _Table 2 - Post classification codes: spatial and temporal filters._
 |Post classification codes| Description|
@@ -42,6 +43,7 @@ _Table 2 - Post classification codes: spatial and temporal filters._
 |**temporal_filter-3.js**| It acts on pixels not classified as urban in TF2.
 |**temporal_filter-4.js**| Extends the filter mask and acts on pixels not classified as 'UA' in TF3.
 |**temporal_filter-5.js**| Area Consolidation Filter.
+<br/>
 
 We have also provided a Google Form where users can inform their improvements and bugs identified. Feel free to use it. The link is: https://forms.gle/BJZbeZjYA5prQYACA 
 
@@ -69,6 +71,7 @@ Threshold | Probability | Population | Nightlight
 low | 50| 1.5 | 3 
 medium | 70| -- | 10 
 high | 95| 50 | 40 
+<br/>
 
 **Code: spatial_filter-1.js**
 
@@ -78,6 +81,7 @@ Threshold | Probability | Population | Nightlight
 low | --| 1.5 | -- 
 medium | 50| -- | -- 
 high | --| 50 | --
+<br/>
 
 **Code: spatial_filter-2.js** 
 
@@ -106,6 +110,7 @@ _Table 5 - Temporal filters._
 |**temporal_filter-3.js**| This filter (TF3) considers results from TF2. <br/> The image results are saved as String(year) + '-gr3-1'
 |**temporal_filter-4.js**| This filter (TF4) considers results from TF3. <br/> The image results are saved as String(year) + '-gr4-1'
 |**temporal_filter-5.js**| This filter (TF5) considers results from TF4. <br/> The image results are saved as String(year) + '-gr5-1'
+<br/>
 
 # Visualization codes
 For each filter you can put the map on screen through a simple function exemplified below. You have to define a list of years and also the assets where you saved the results.
