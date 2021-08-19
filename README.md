@@ -24,7 +24,7 @@ The modules necessary are shown in Tables 1 and 2.<br/>
 _Table 1 - Classification codes utilized in collection 6._
 |Classification codes| Description
 |:---|:---
-**classification_batch_l5_l7.js** | Generate index mosaics from Landsat 5 and Landsat 7 images. The years are selected manually from 1985 to 2012
+[**classification_batch_l5_l7.js**](classification_batch_l5_l7.js) | Generate index mosaics from Landsat 5 and Landsat 7 images. The years are selected manually from 1985 to 2012
 **classification_batch_l8.js** | Generate index mosaics from Landsat 8 images. The years are selected manually from 2013 to 2020.
 **classification_lib.js** | Applied to classify the mosaic obtained through Random Forest algorithm 
 **index_lib.js** | Generates a library of images indexes.
