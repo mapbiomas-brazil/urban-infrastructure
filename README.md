@@ -8,6 +8,13 @@
 </div>
 
 Developed by MapBiomas Urban Area Mapping Group, composed of students and researchers from:
+NEEPC <br/>
+NEPA <br/>
+QUAPÁ <br/>
+YBY <br/>
+UFBA <br/>
+USP
+
 (in development)
 
 # About
@@ -45,29 +52,30 @@ _Table 2 - Post classification codes: spatial and temporal filters._
 |**temporal_filter-5.js**| Area Consolidation Filter.
 <br/>
 
-We have also provided a Google Form where users can inform their improvements and bugs identified. Feel free to use it. The link is: https://forms.gle/BJZbeZjYA5prQYACA 
+We have also provided a Google Form where users can inform their improvements and report bugs. Feel free to use it. The link is: https://forms.gle/BJZbeZjYA5prQYACA 
 
 ## Other information
-Considering that the Brazilian territory is quite extensive, the classification of urban areas requires computational resources beyond the available GEE memory limits. For processing, the Urban Areas reference is selected through land use and land cover samples, composed of randomly distributed points, which contain information (eg., spectral indices) about the class to which they belong. <br/>
+The Urban Areas reference is selected through land use and land cover samples, composed of randomly distributed points, which contain information (eg, spectral indices) about the class to which they belong.<br>
+Considering the wide Brazilian territory, the classification of urban areas requires high computational resources, beyond the available GEE memory limits. <br/>
 To solve this problem of the GEE processing limit, the territory was divided into 439 polygons, according to the Millionth Map of the World. These polygons were divided into five groups that can be processed separately. <br/>
 Occasionally, failures can occur due to overflowing the memory limit; lack of cloudless images for each year; or for problems related to Landsat 7. For cases of memory extrapolation, the procedure was repeated only for the polygons that presented this problem. If the fault remained, only Landsat 5 images were used, from 2000 to 2009. The other cases were later corrected in the temporal filter. <br/>
 At the end, the classified images corresponding to each polygon composed a single raster file per year, where each pixel represents the probability of being an urban area.
 
 # Start classification
-## Start processing the classification_batch_l5_l7.js script (for the years 1985 - 2012)
-In this script, the classification process using Random Forest is carried out, using images from 1985 to 2012. In it, the user must manually change the year variable to generate an image of the probability of a given pixel being an urban area. <br/>
-These images will be inserted into an Image Collection, the same one that will be used in the following script
+## Start processing the classification_batch_l5_l7.js script (for the years 1985 - 2013)
+In this script, the classification process using Random Forest is carried out, using Landsat 5 and Landsat 7 images from 1985 to 2012. In it, the user must manually change the year variable to generate an image where the pixel value is the urban probability. <br/>
+These annual images will be inserted into an Image Collection, the same one that will be used in the following script
 
 Code: **[classification_batch_l5_l7.js](classification_batch_l5_l7.js)**
 
 ## Start processing the classification_batch_l8.js script (for the years 2013 - 2020)
-In this script, the classification process is similar to the one presented above, but for the period from 2013 to 2020. At the end, the Image Collection will contain probability images for all the years of interest.
+In this script, the classification process is similar to the one presented above, but the Landsat 8 images were used for the period from 2014 to 2020. At the end, the Image Collection will contain probability images for all the years, from 1985 to 2020.
 
 Code: **[classification_batch_l8.js](classification_batch_l8.js)**
 
 ## Start spatial filters
-Spatial filters operate by combining information in order to generate a post-classification imagery, considering probability to be urban (from Random Forest classification); presence of population and nighttime lights map. Thresholds were established for these data as explained in ATBD and shown in Tables 3 and 4. 
-The small municipalities considered are presented in spatial filter 2 code. There is possible to catch the ‘territories code’ as considered by IBGE documents. You can access them here https://www.ibge.gov.br/explica/codigos-dos-municipios.php.
+Spatial filters combine information in order to generate a post-classification imagery, considering the urban probability (from Random Forest classification); the presence of population and the nighttime lights. Thresholds were established for these data as explained in ATBD and shown in Tables 3 and 4. 
+The small municipalities, where the night lights were weak, were included in spatial filter 2 code. To identify them, data from Instituto Brasileiro de Geografia e Estatística were used.
 
 _Table 3 - Spatial filter 1 - General rule to most municipalities._
 Threshold | Probability | Population | Nightlight
@@ -89,22 +97,22 @@ high | --| 50 | --
 
 Code: **[spatial_filter-2.js](spatial_filter-2.js)**
 
-merge_collections.jsThe results from each spatial filter are saved in an image Collection that you can specify. However, It is important to consider an asset that you can save all the images to the nexts steps. You need to create this collection in advance then you can save the images there. If it is the case, you can also merge different collections using a ‘merge_collection.js’ code as we have done:    
+merge_collections.jsThe results from each spatial filter are saved in an image Collection that you can specify. However, It is important to create an empty asset where you will save the images that will be created in the nexts steps. If it is the case, you can also merge different collections using a ‘merge_collection.js’ code as we have done:    
 
 Code: **[merge_collections.js](merge_collections.js)**
 
 In this script, the addresses of image collections used in the spatial filters in the variables img1 and img2 are indicated. Then the script will join the products of each spatial filter iterating by year. <br/>
-The result is an image collection containing large and small municipalities. This product will be submitted to the temporal filter
+The result is an image collection containing large and small municipalities. This product will be submitted to the temporal filter. <br/>
 
 ## Start temporal filter
-The temporal filter consists of a method to improve classification consistency over the years. We developed an array of simple codes applied in a stepwise sense. Each of them operates according to results obtained from the previous one. We encourage you to consider accessing the ATBD documentation to clarify the kernel concept adopted here. The main points of the code are explained in Table 5. <br/>
+The temporal filter consists of a method to improve classification consistency over the years. We developed a set of simple codes applied in a stepwise sense. Each of them operates according to results obtained from the previous one. We encourage you to consider accessing the ATBD documentation to clarify the kernel concept adopted here. The main points of the code are explained in Table 5. <br/>
 
-Both the input asset and export image address have to be adjusted to each user and team. In general terms, the images from each step result are saved in an Image Collection named as:
+Both the input asset and the address of the exported images have to be set up into code.. In general terms, the images from each step result are saved in an Image Collection named as:
 
 String(year) + '-grN_V',  <br/>
-where gr = ‘general rule’, N = temporal filter order, and V=version.
+where gr = ‘general rule’, N = temporal filter order, and V=version. <br/>
 
-The same Image Collection is used to save all images from TF results. For each case, a list of years is considered as ‘initial years’, ‘mid years’ and ‘last years’. This segmentation is necessary to enable specific consistency rules.
+The same Image Collection is used to save all images from TF results. For each case, a list of years is considered as ‘initial years’, ‘mid years’ and ‘last years’. This segmentation is necessary to enable specific consistency rules. <br/>
 
 _Table 5 - Temporal filters._ 
 |Codes| Main points of the code|
@@ -117,7 +125,7 @@ _Table 5 - Temporal filters._
 <br/>
 
 # Visualization codes
-For each filter you can put the map on screen through a simple function exemplified below. You have to define a list of years and also the assets where you saved the results.
+For each filter you can put the map on screen through a simple function exemplified below. You have to define a list of years and also the assets where you saved the results.<br/>
 
 ```javascript
 var FT_result = "write here the asset address of the image Collection considered"
@@ -131,4 +139,4 @@ var FTn_results = function(year){
 
 var img = years.map(FTn_results) //Add the map on the screen
 ```
-You can put different results compared and also generate side-by-side results directly on GEE. For this, we encourage the public to consult Google Earth Engine documentation about _linked maps.
+You can put different results compared and also generate side-by-side results directly on GEE. For this, we encourage the public to consult Google Earth Engine documentation about _linked maps._
