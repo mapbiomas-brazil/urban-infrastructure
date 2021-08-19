@@ -9,7 +9,7 @@
 
 Developed by MapBiomas Urban Area Mapping Group, composed of students and researchers from:
 - LabCart <br/>
-- Lasere <br/>
+- LASERE <br/>
 - NEEPC <br/>
 - NEPA <br/>
 - QUAPÁ <br/>
