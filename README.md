@@ -24,7 +24,7 @@ The modules necessary are shown in Tables 1 and 2.<br/>
 _Table 1 - Classification codes utilized in collection 6._
 |Classification codes| Description
 |:---|:---
-[**classification_batch_l5_l7.js**](classification_batch_l5_l7.js) | Generate index mosaics from Landsat 5 and Landsat 7 images. The years are selected manually from 1985 to 2012
+**classification_batch_l5_l7.js** | Generate index mosaics from Landsat 5 and Landsat 7 images. The years are selected manually from 1985 to 2012
 **classification_batch_l8.js** | Generate index mosaics from Landsat 8 images. The years are selected manually from 2013 to 2020.
 **classification_lib.js** | Applied to classify the mosaic obtained through Random Forest algorithm 
 **index_lib.js** | Generates a library of images indexes.
@@ -58,8 +58,12 @@ At the end, the classified images corresponding to each polygon composed a singl
 In this script, the classification process using Random Forest is carried out, using images from 1985 to 2013. In it, the user must manually change the year variable to generate an image of the probability of a given pixel being an urban area. <br/>
 These images will be inserted into an Image Collection, the same one that will be used in the following script
 
+**Code: [classification_batch_l5_l7.js **](classification_batch_l5_l7.js)
+
 ## Start processing the classification_batch_l8.js script (for the years 2013 - 2019)
 In this script, the classification process is similar to the one presented above, but for the period from 2014 to 2020. At the end, the Image Collection will contain probability images for all the years of interest.
+
+**Code: [classification_batch_l8.js**](classification_batch_l8.js)
 
 ## Start spatial filters
 Spatial filters operate by combining information in order to generate a post-classification imagery, considering probability to be urban (from Random Forest classification); presence of population and nighttime lights map. Thresholds were established for these data as explained in ATBD and shown in Tables 3 and 4. 
@@ -73,7 +77,7 @@ medium | 70| -- | 10
 high | 95| 50 | 40 
 <br/>
 
-**Code: spatial_filter-1.js**
+**Code: [spatial_filter-1.js**](spatial_filter-1.js)
 
 _Table 4 - Spatial filter 2 - Rule for small municipalities._
 Threshold | Probability | Population | Nightlight
@@ -83,11 +87,11 @@ medium | 50| -- | --
 high | --| 50 | --
 <br/>
 
-**Code: spatial_filter-2.js** 
+**Code: [spatial_filter-2.js**](spatial_filter-2.js)
 
 merge_collections.jsThe results from each spatial filter are saved in an image Collection that you can specify. However, It is important to consider an asset that you can save all the images to the nexts steps. You need to create this collection in advance then you can save the images there. If it is the case, you can also merge different collections using a ‘merge_collection.js’ code as we have done:    
 
-**Code: merge_collections.js**
+**Code: [merge_collections.js**](merge_collections.js)
 
 In this script, the addresses of image collections used in the spatial filters in the variables img1 and img2 are indicated. Then the script will join the products of each spatial filter iterating by year. <br/>
 The result is an image collection containing large and small municipalities. This product will be submitted to the temporal filter
@@ -105,11 +109,11 @@ The same Image Collection is used to save all images from TF results. For each c
 _Table 5 - Temporal filters._ 
 |Codes| Main points of the code|
 |:---|:---|
-|**temporal-filter-1.js**| This filter (TF1) considers results from spatial filters. <br/> The image results are saved as String(year) + '-gr1-1'
-|**temporal_filter-2.js**| This filter (TF2) considers results from TF1. <br/> The image results are  saved as String(year) + '-gr2-1'
-|**temporal_filter-3.js**| This filter (TF3) considers results from TF2. <br/> The image results are saved as String(year) + '-gr3-1'
-|**temporal_filter-4.js**| This filter (TF4) considers results from TF3. <br/> The image results are saved as String(year) + '-gr4-1'
-|**temporal_filter-5.js**| This filter (TF5) considers results from TF4. <br/> The image results are saved as String(year) + '-gr5-1'
+|[**temporal-filter-1.js**](temporal-filter-1.js)| This filter (TF1) considers results from spatial filters. <br/> The image results are saved as String(year) + '-gr1-1'
+|**[temporal_filter-2.js**](temporal_filter-2.js)| This filter (TF2) considers results from TF1. <br/> The image results are  saved as String(year) + '-gr2-1'
+|**[temporal_filter-3.js**](temporal_filter-3.js)| This filter (TF3) considers results from TF2. <br/> The image results are saved as String(year) + '-gr3-1'
+|**[temporal_filter-4.js**](temporal_filter-4.js)| This filter (TF4) considers results from TF3. <br/> The image results are saved as String(year) + '-gr4-1'
+|**[temporal_filter-5.js**](temporal_filter-5.js)| This filter (TF5) considers results from TF4. <br/> The image results are saved as String(year) + '-gr5-1'
 <br/>
 
 # Visualization codes
