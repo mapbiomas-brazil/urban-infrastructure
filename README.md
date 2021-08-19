@@ -58,7 +58,7 @@ At the end, the classified images corresponding to each polygon composed a singl
 In this script, the classification process using Random Forest is carried out, using images from 1985 to 2013. In it, the user must manually change the year variable to generate an image of the probability of a given pixel being an urban area. <br/>
 These images will be inserted into an Image Collection, the same one that will be used in the following script
 
-**Code: [classification_batch_l5_l7.js **](classification_batch_l5_l7.js)
+**Code: [classification_batch_l5_l7.js](classification_batch_l5_l7.js)**
 
 ## Start processing the classification_batch_l8.js script (for the years 2013 - 2019)
 In this script, the classification process is similar to the one presented above, but for the period from 2014 to 2020. At the end, the Image Collection will contain probability images for all the years of interest.
