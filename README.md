@@ -98,7 +98,7 @@ high | --| 50 | --
 
 Code: **[spatial_filter-2.js](spatial_filter-2.js)**
 
-merge_collections.jsThe results from each spatial filter are saved in an image Collection that you can specify. However, It is important to create an empty asset where you will save the images that will be created in the nexts steps. If it is the case, you can also merge different collections using a ‘merge_collection.js’ code as we have done:    
+The results from each spatial filter are saved in an image Collection that you can specify. However, It is important to create an empty asset where you will save the images that will be created in the nexts steps. If it is the case, you can also merge different collections using a ‘merge_collection.js’ code as we have done:    
 
 Code: **[merge_collections.js](merge_collections.js)**
 
