@@ -63,7 +63,7 @@ These images will be inserted into an Image Collection, the same one that will b
 ## Start processing the classification_batch_l8.js script (for the years 2013 - 2019)
 In this script, the classification process is similar to the one presented above, but for the period from 2014 to 2020. At the end, the Image Collection will contain probability images for all the years of interest.
 
-**Code: [classification_batch_l8.js**](classification_batch_l8.js)
+**Code: [classification_batch_l8.js](classification_batch_l8.js)**
 
 ## Start spatial filters
 Spatial filters operate by combining information in order to generate a post-classification imagery, considering probability to be urban (from Random Forest classification); presence of population and nighttime lights map. Thresholds were established for these data as explained in ATBD and shown in Tables 3 and 4. 
@@ -109,11 +109,11 @@ The same Image Collection is used to save all images from TF results. For each c
 _Table 5 - Temporal filters._ 
 |Codes| Main points of the code|
 |:---|:---|
-|[**temporal-filter-1.js**](temporal-filter-1.js)| This filter (TF1) considers results from spatial filters. <br/> The image results are saved as String(year) + '-gr1-1'
-|**[temporal_filter-2.js**](temporal_filter-2.js)| This filter (TF2) considers results from TF1. <br/> The image results are  saved as String(year) + '-gr2-1'
-|**[temporal_filter-3.js**](temporal_filter-3.js)| This filter (TF3) considers results from TF2. <br/> The image results are saved as String(year) + '-gr3-1'
-|**[temporal_filter-4.js**](temporal_filter-4.js)| This filter (TF4) considers results from TF3. <br/> The image results are saved as String(year) + '-gr4-1'
-|**[temporal_filter-5.js**](temporal_filter-5.js)| This filter (TF5) considers results from TF4. <br/> The image results are saved as String(year) + '-gr5-1'
+|**[temporal-filter-1.js](temporal-filter-1.js)**| This filter (TF1) considers results from spatial filters. <br/> The image results are saved as String(year) + '-gr1-1'
+|**[temporal_filter-2.js](temporal_filter-2.js)**| This filter (TF2) considers results from TF1. <br/> The image results are  saved as String(year) + '-gr2-1'
+|**[temporal_filter-3.js](temporal_filter-3.js)**| This filter (TF3) considers results from TF2. <br/> The image results are saved as String(year) + '-gr3-1'
+|**[temporal_filter-4.js](temporal_filter-4.js)**| This filter (TF4) considers results from TF3. <br/> The image results are saved as String(year) + '-gr4-1'
+|**[temporal_filter-5.js](temporal_filter-5.js)**| This filter (TF5) considers results from TF4. <br/> The image results are saved as String(year) + '-gr5-1'
 <br/>
 
 # Visualization codes
