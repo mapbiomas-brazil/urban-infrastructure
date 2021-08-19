@@ -8,14 +8,13 @@
 </div>
 
 Developed by MapBiomas Urban Area Mapping Group, composed of students and researchers from:
-NEEPC <br/>
-NEPA <br/>
-QUAPÁ <br/>
-YBY <br/>
-UFBA <br/>
-USP
+- NEEPC <br/>
+- NEPA <br/>
+- QUAPÁ <br/>
+- YBY <br/>
+- UFBA <br/>
+- USP
 
-(in development)
 
 # About
 This repository contains the information used in Mapbiomas Collection 6: Urban Aarea mapping. We strongly recommend reading the Appendix of the Algorithm Theoretical Basis Document (ATBD) for Urban Area, which describes concepts and procedures of  mapping processes. Here, we highlight the useful information to explore and to understand our  codes in Google Earth Engine platform.
