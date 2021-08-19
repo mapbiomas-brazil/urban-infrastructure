@@ -11,7 +11,7 @@ Developed by MapBiomas Urban Area Mapping Group, composed of students and resear
 (in development)
 
 # About
-This repository contains the information used in Mapbiomas Collection 6: Uurban Aarea mapping. We strongly recommend reading the Appendix of the Algorithm Theoretical Basis Document (ATBD) for Urban Area, which describes concepts and procedures of  mapping processes. Here, we highlight the useful information to explore and to understand our  codes in Google Earth Engine platform.
+This repository contains the information used in Mapbiomas Collection 6: Urban Aarea mapping. We strongly recommend reading the Appendix of the Algorithm Theoretical Basis Document (ATBD) for Urban Area, which describes concepts and procedures of  mapping processes. Here, we highlight the useful information to explore and to understand our  codes in Google Earth Engine platform.
 
 # How to use
 ## Basics
@@ -49,7 +49,7 @@ We have also provided a Google Form where users can inform their improvements an
 
 ## Other information
 Considering that the Brazilian territory is quite extensive, the classification of urban areas requires computational resources beyond the available GEE memory limits. For processing, the Urban Areas reference is selected through land use and land cover samples, composed of randomly distributed points, which contain information (eg., spectral indices) about the class to which they belong. <br/>
-To get around the problem of the GEE processing limit, the territory was divided into 439 polygons, according to the Millionth Map of the World. These polygons were divided into five groups that can be processed separately. <br/>
+To solve this problem of the GEE processing limit, the territory was divided into 439 polygons, according to the Millionth Map of the World. These polygons were divided into five groups that can be processed separately. <br/>
 Occasionally, failures can occur due to overflowing the memory limit; lack of cloudless images for each year; or for problems related to Landsat 7. For cases of memory extrapolation, the procedure was repeated only for the polygons that presented this problem. If the fault remained, only Landsat 5 images were used, from 2000 to 2009. The other cases were later corrected in the temporal filter. <br/>
 At the end, the classified images corresponding to each polygon composed a single raster file per year, where each pixel represents the probability of being an urban area.
 
