@@ -61,7 +61,7 @@ These images will be inserted into an Image Collection, the same one that will b
 Code: **[classification_batch_l5_l7.js](classification_batch_l5_l7.js)**
 
 ## Start processing the classification_batch_l8.js script (for the years 2013 - 2020)
-In this script, the classification process is similar to the one presented above, but for the period from 2014 to 2020. At the end, the Image Collection will contain probability images for all the years of interest.
+In this script, the classification process is similar to the one presented above, but for the period from 2013 to 2020. At the end, the Image Collection will contain probability images for all the years of interest.
 
 Code: **[classification_batch_l8.js](classification_batch_l8.js)**
 
