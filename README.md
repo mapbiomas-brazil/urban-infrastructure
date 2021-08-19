@@ -8,12 +8,14 @@
 </div>
 
 Developed by MapBiomas Urban Area Mapping Group, composed of students and researchers from:
+- LabCart <br/>
+- Lasere <br/>
 - NEEPC <br/>
 - NEPA <br/>
 - QUAPÁ <br/>
 - YBY <br/>
 - UFBA <br/>
-- USP
+- USP <br/>
 
 
 # About
