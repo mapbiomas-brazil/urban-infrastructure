@@ -1,7 +1,7 @@
 <div class="fluid-row" id="header">
     <div id="column">
         <div class = "blocks">
-            <img src='Images/LogosMapBiomasUAgroup.png' height='auto' width='auto' align='right'>
+            <img src='Image/LogosMapBiomasUAgroup.png' height='auto' width='auto' align='right'>
         </div>
     </div>
     <h1 class="title toc-ignore">Urban Area</h1>
@@ -109,7 +109,7 @@ The same Image Collection is used to save all images from TF results. For each c
 _Table 5 - Temporal filters._ 
 |Codes| Main points of the code|
 |:---|:---|
-|**[temporal-filter-1.js](temporal-filter-1.js)**| This filter (TF1) considers results from spatial filters. <br/> The image results are saved as String(year) + '-gr1-1'
+|**[temporal_filter-1.js](temporal_filter-1.js)**| This filter (TF1) considers results from spatial filters. <br/> The image results are saved as String(year) + '-gr1-1'
 |**[temporal_filter-2.js](temporal_filter-2.js)**| This filter (TF2) considers results from TF1. <br/> The image results are  saved as String(year) + '-gr2-1'
 |**[temporal_filter-3.js](temporal_filter-3.js)**| This filter (TF3) considers results from TF2. <br/> The image results are saved as String(year) + '-gr3-1'
 |**[temporal_filter-4.js](temporal_filter-4.js)**| This filter (TF4) considers results from TF3. <br/> The image results are saved as String(year) + '-gr4-1'
