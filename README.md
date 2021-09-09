@@ -79,7 +79,7 @@ The small municipalities, where the night lights were weak, were included in spa
 _Table 3 - Spatial filter 1 - General rule to most municipalities._
 |Threshold | Probability | Population | Nightlight
 |:---| :---| :---| :---
-|low | 50| 1.5 | 3 Screenshot from 2021-09-08 22-59-14
+|low | 50| 1.5 | 3 
 |medium | 70| -- | 10 
 |high | 95| 50 | 40 
 <br/>
