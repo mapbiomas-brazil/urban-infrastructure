@@ -25,78 +25,163 @@ var geometry =
 Results: (0 and masked) = Non-urban, 1 = urban
 */
  
-//Defines the input asset and delimits the export area
-var input_asset = 'users/edimilsonrodriguessantos/MAPBIOMAS/INFRAURBANA6-FT-v6'
-var ExportImage = function(image, geometry, year){
 
-    var imageName =  String(year) + '-gr4-' + 1;
+//Defines the input asset and delimits the export area to the most of years
+var input_asset = 'projects/mapbiomas-workspace/TRANSVERSAIS/INFRAURBANA7-FT/'
+var outputAsset = input_asset
+var outputVersion = '-FE1-v3-gr4-1'//versão de saída
+var version = '-FE1-v3-gr3'//versão de entrada
+var scale = 30
+
+//Export an image
+var ExportImage = function(image, imageName){
+    
+    var year = image.get('year').getInfo()
+    
+    var imageRenamed = image.rename('classification_' + year)
     
     Export.image.toAsset({
-        "image": image,
-        "assetId":"users/edimilsonrodriguessantos/MAPBIOMAS/INFRAURBANA6-FT-v6" +'/'+ imageName,
+        // "image": image,
+        "image": imageRenamed,
+        "assetId": outputAsset + imageName,
         "description": imageName,
         "region": geometry,
-        "scale": 30,
+        "scale": scale,
         "maxPixels": 1e13,
     });
   };
 
-//Defines the list of years considered and separates the final years
-var years_mid = [
-                 1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,
-                 2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,
-                 2015,2016,2017,2018,2019
-                 ]
-var first_year = [1985]
-var last_year = [2020]
+//Export an imageCollection
+var downloadToAsset = function (collection){
+  
+  var n = collection.size().getInfo()
+  
+  var colList = collection.toList(n)
+  
+  for (var i = 0; i < n; i++) {
+    
+    var element = colList.get(i)
+    
+    var img = ee.Image(element)
+    
+    var obj = img.get('year').getInfo()
+    
+    var imageName = 'classifcation_' + obj + outputVersion
+    
+    ExportImage (img, imageName)
+}}
 
-//Apply the filter for the first year, rescuing the result of the second temporal filter and exporting the result
-var filter_GR3_first = first_year.map(function(year){
+//Assets and variables
+var infraprob = ee.ImageCollection('projects/mapbiomas-workspace/TRANSVERSAIS/INFRAURBANA7-PROB')
+
+// Add the IRS index to the spatial filter
+var CO  = ee.FeatureCollection('users/efjustiniano/IRS2021/landuseTransport/LTB_area/LTB_area_CO');
+var NO  = ee.FeatureCollection('users/efjustiniano/IRS2021/landuseTransport/LTB_area/LTB_area_NO');
+var NE  = ee.FeatureCollection('users/efjustiniano/IRS2021/landuseTransport/LTB_area/LTB_area_NE');
+var SE1 = ee.FeatureCollection('users/efjustiniano/IRS2021/landuseTransport/LTB_area/LTB_area_SE1');
+var SE2 = ee.FeatureCollection('users/efjustiniano/IRS2021/landuseTransport/LTB_area/LTB_area_SE2');
+var SU  = ee.FeatureCollection('users/efjustiniano/IRS2021/landuseTransport/LTB_area/LTB_area_SU');
+
+var LTB_area = (NO.merge(NE).merge(CO).merge(SE1).merge(SE2).merge(SE2).merge(SU));
+
+var LTBvalue = 1000;
+var LTB_areaImg = LTB_area
+  .reduceToImage({
+    properties: ['b1'],
+    reducer: ee.Reducer.first()
+}).rename('b1').multiply(LTBvalue).unmask();
+
+// Streets, avenues and roads kernell
+//https://doi.org/10.1016/j.jag.2022.102791
+var roads = ee.ImageCollection('users/efjustiniano/IRS2021/roads/roads_200/roads_200').max();
+//Map.addLayer(irs.gte(500), {}, 'irs')
+
+var constrBorderKernel = ee.ImageCollection('users/efjustiniano/IRS2021/landuseTransportImg/LTB200/LTBimg').sum();
+  
+var irsUrb = ee.ImageCollection([roads, LTB_areaImg, constrBorderKernel]).max().reproject('EPSG:4326', null, 30).gte(500);
+
+//AGSN
+var agsn2010 = ee.Image('users/pedrassoli_julio/COL7/AGSN_2010_RASTER_MASK').remap([0],[1]).unmask()
+var agsn2020 = ee.Image('users/pedrassoli_julio/COL7/AGSN_2020_RASTER_MASK').remap([0],[1]).unmask()
+var spatialMask = ee.ImageCollection([
+  agsn2010.rename('spatialMask').toByte(),
+  agsn2020.rename('spatialMask').toByte(),
+  // setCens.rename('spatialMask').toByte(),
+  irsUrb.rename('spatialMask').toByte(),
+  ]).max().gte(1).unmask()
+    // .multiply(irsUrb.rename('spatialMask')).toByte();
+
+//Apply a consolidation process considering the most of the years
+var years = ee.List.sequence(1986, 2020).getInfo()
+
+// - Obtain an image Collection of interest
+var validatedCollection = ee.ImageCollection(
+  years.map(
+  
+  function(year){
+  
+  var imgResult = ee.Image(input_asset + year + version).unmask().multiply(spatialMask)
+  
+  return imgResult.set('year', year)
+  }))
+
+// - Accumulate the urban areas across the years
+var consolidatedCollection = ee.ImageCollection(
+  years.map(
+  
+  function(year){
+    
+    var imgResult = validatedCollection.filter(ee.Filter.lte('year', year)).max()
+    
+    return imgResult.set('year', year)
+  }))
+
+//- Export the results
+downloadToAsset(consolidatedCollection)
+
+//Apply a validation filter to the first year
+var firstYear = [1985] 
+
+firstYear.map(function(year){
   var next = year + 1
   
-  var year_0 = ee.Image(input_asset + '/' + year + '-gr3-' + 1).unmask()
-  var year_next = ee.Image(input_asset + '/' + next + '-gr3-' + 1)
-
-  //Form the classified image for the first year
-  var image_result = year_0.where(year_0.eq(1).and(year_next.eq(1)), 1)
-  var cond = ee.ImageCollection([year_0, image_result]).sum().gte(1)
+  var year_next =  ee.Image(input_asset + next + version).unmask()//img0//.select('classification_' + next)
+  var year_0 = ee.Image(input_asset + year + version).unmask()//.select('remapped')
+                 .multiply(spatialMask)
   
-  Map.addLayer(cond,{min: 0.99, max: 1, palette: ['black','red'], opacity: 0.40}, 'result2_' + year)
-  ExportImage(cond,geometry,year)
+  var imgResult = year_0.where(year_0.eq(1).and(year_next.eq(0)),0)
+                        .unmask()
+                        .set('year', year)
+
+  var imageName = 'classifcation_' + year + outputVersion
+  
+  ExportImage (imgResult, imageName)
+  
+  return imgResult
 })
 
-//Apply the filter for all years except edge years
-var filter_GR3 = years_mid.map(function(year){
-  var prev = year - 1
-  var next = year + 1
+//Apply a validation filter to the last year adding the new urbanized areas from best thresholds
+var SFresults = 'projects/mapbiomas-workspace/TRANSVERSAIS/INFRAURBANA7-FS1/'
+var resultsVersion = '_v3'
 
-  var year_prev = ee.Image(input_asset +'/' + prev + '-gr3-' + 1)
-  var year_0 = ee.Image(input_asset + '/' + year + '-gr3-' + 1).unmask()
-  var year_next = ee.Image(input_asset + '/' + next + '-gr3-' + 1)
-
-  var image_result = year_0.where(year_prev.eq(1).and(year_0.eq(0)).and(year_next.eq(1)), 1)
+var lastYear = [2021]
+var lastYearResults = ee.ImageCollection(
+  lastYear.map(
   
-  /*Forms an image that includes what was already classified in the second filter and the error eliminated in this filter*/
-  var cond = ee.ImageCollection([year_0,image_result]).sum().gte(1)
+  function(year){
+    
+    var imgYear = validatedCollection.filter(ee.Filter.lte('year', year)).max()
+    
+    var imgSF = ee.Image(SFresults + year + resultsVersion)
+    
+    var imgResult = ee.ImageCollection([imgYear, imgSF]).max().set('year', year)
+                      .multiply(spatialMask)
+                      .unmask()
+                      .set('year', year)
+    
+    var imageName = 'classifcation_' + year + outputVersion
   
-  Map.addLayer(cond,{min: 0.99, max: 1, palette: ['black','red'], opacity: 0.40}, 'result2_' + year)
-  ExportImage(cond,geometry,year)
-  
-})
-
-//Apply the filter adapted for the last year and export the result
-var filter_GR3_last = last_year.map(function(year){
-  
-  var prev = year - 1
-  
-  var year_prev = ee.Image(input_asset +'/' + prev + '-gr3-' + 1)
-  var year_0 = ee.Image(input_asset + '/' + year + '-gr3-' + 1).unmask()
-  
-  //Forms an image that includes what has already been rated for the previous year
-  var image_result = year_0.where(year_prev.eq(1), 1)
-  
-  //It forms the image for the last year considering the possible new urban areas and the result for the previous year
-  var cond = ee.ImageCollection([year_0,image_result]).sum().gte(1)
-  Map.addLayer(cond,{min: 0.99, max: 1, palette: ['black','red'], opacity: 0.40}, 'result2_' + year)
-  ExportImage(cond,geometry,year)
-})
+    ExportImage (imgResult, imageName)
+    
+  return imgResult
+  }))
