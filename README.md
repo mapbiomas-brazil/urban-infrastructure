@@ -79,7 +79,7 @@ where gr = ‘general rule’, N = temporal filter order, and V=version. <br/>
 
 The same Image Collection is used to save all images from TF results. For each case, a list of years is considered as ‘initial years’, ‘mid years’ and ‘last years’. This segmentation is necessary to enable specific consistency rules. <br/>
 
-_Table 5 - Temporal filters._ 
+_Table 3 - Temporal filters._ 
 |Codes| Main points of the code|
 |:---|:---|
 |**[temporal_filter-1.js](temporal_filter-1.js)**| This filter (TF1) considers results from spatial filters. <br/> The image results are saved as String(year) + '-gr1-1'
