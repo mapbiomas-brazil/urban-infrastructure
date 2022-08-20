@@ -55,7 +55,7 @@ To solve this problem of the GEE processing limits, the territory was divided in
 Occasionally, failures can occur due to overflowing the memory limit; lack of cloudless images for each year; or for problems related to Landsat 7. For cases of memory extrapolation, the procedure was repeated only for the polygons that presented this problem. The other cases were later corrected using the temporal filters. <br/>
 At the end of the basics classification process (ref. Table 1), the classified images corresponding to each polygon composed a single raster file per year where each pixel represents the probability of being an urban area.
 
-# Start classification
+# Start the classification process
 ## Start processing the classification_batch.js script
 In this script, a classification process using Random Forest is carried out. All the codes in Table 1 are required. In it, the user must manually change the year variable to generate an image where the pixel value is the urban probability. <br/>
 These annual images from 1985 to 2021 will be inserted into an Image Collection, the same one that will be used in the following scripts.
