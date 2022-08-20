@@ -7,6 +7,16 @@ Origin Collection: 7
 - Remember to Change asset path in ExportImage function (assetID)
 =======================================
 */
+var br = 
+    /* color: #d63000 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[-75.59290241852334, 6.116530180285959],
+          [-75.59290241852334, -36.47606779670446],
+          [-32.526496168523344, -36.47606779670446],
+          [-32.526496168523344, 6.116530180285959]]], null, false);
+
+
 
 // >>> Adjust the following variables <<< \\
 var year = 2018;  
@@ -99,9 +109,9 @@ var cartas_col = ee.FeatureCollection("users/mahirye_usp/Cartas_AUXILIAR_cMaskDa
 var samples_urban = ee.FeatureCollection("users/Col7/Samples_Train/Urb_Train_Filter/Col7UrbV3_1_TAll_AllSamples_Urb_Filter_" + year);
 var samples_nurban = ee.FeatureCollection("users/Col7/Samples_Train/NUrb_Train/Col7UrbV3_1_TAll_AllSamples_NUrb_" + year);
 
-var class_lib = require("users/breno_malheiros/MapBiomas:InfraUrbana-Col7/classification_lib"); 
+var class_lib = require("users/breno_malheiros/MapBiomas:Col7/classification_lib"); 
 // Link - https://code.earthengine.google.com/781eea828fbe16e7913e8611529f3a38?noload=true
-var mosaicGen = require("users/breno_malheiros/MapBiomas:InfraUrbana-Col7/mosaicGen");          
+var mosaicGen = require("users/breno_malheiros/MapBiomas:Col7/mosaicGen");                  
 // Link - https://code.earthengine.google.com/8722ff8c9c1c4ce86c4a09dea5e90cea?noload=true
 
 // 'Carta Internacional do Mundo ao Milionésimo - CIM'
