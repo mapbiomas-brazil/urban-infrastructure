@@ -33,6 +33,7 @@ _Table 1 - Basic classification codes._
 **preProcessing_lib.js** | Filters Landsat collection scenes and masks clouds and shadows.
 **index_lib.js** | Generates a library of images indexes.
 **mosaic_production.js** | Generates mosaics from Landsat images from 1985 to 2021.
+**class_lib.js** | Sets up a classification procedure using Random Forest (RF) algorithm.
 **classification_batch.js** | Applies a classification process using Random Forest (RF) algorithm.
 <br/>
 
