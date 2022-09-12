@@ -6,7 +6,7 @@ Origin Collection: adapted from collection 5
 
 =======================================
 */
-/////////////Functions to calculate indexes - Normalized Difference - original scale -1 to 1
+//Functions to calculate indexes - Normalized Difference - original scale -1 to 1
 var addNDVI = function(image) {
   var ndvi = image.expression(
   '(NIR - RED) / (NIR + RED)',{ 
@@ -216,9 +216,7 @@ var calcBAI = function(image){
 // Santos, Bruno Dias dos, Carolina Moutinho Duque de Pinho, Gilberto Eidi Teramoto Oliveira, Thales Sehn Korting, Maria Isabel Sobral Escada, e Silvana Amaral. “Identifying Precarious Settlements and Urban Fabric Typologies Based on GEOBIA and Data Mining in Brazilian Amazon Cities”. Remote Sensing 14, nº 3 (janeiro de 2022): 704. 
 // https://doi.org/10.3390/rs14030704
 
-
-
-/////////////Functions to calculate indexes - Other
+//Functions to calculate indexes - Other
 var addBU = function(image){
   var out = image.expression(
   'NDBI - NDVI', {
@@ -236,7 +234,7 @@ var calcBU = function(image){
 };
 
 
-/////////////Functions to calculate indexes - Spectral Mixture Analysis
+//Functions to calculate indexes - Spectral Mixture Analysis
 var addSMA = function (image) {
   var endmembers = [
       [119.0, 475.0, 169.0, 6250.0, 2399.0, 675.0], /*gv*/
@@ -406,10 +404,7 @@ var calcSMASmall = function (image) {
 };
 
 
-
-
-
-/////////////Functions to calculate indexes - Thermal // original scale -1 to 1 [paper] -5(approx.) to +2(approx.) [2018 Brasil]
+//Functions to calculate indexes - Thermal // original scale -1 to 1 [paper] -5(approx.) to +2(approx.) [2018 Brasil]
 var calcEBBI = function(image) {
   var out = image.expression(
     '((MIR - NIR) / (10 * ((MIR + TIR)**0.5)))',{ 
@@ -420,10 +415,7 @@ var calcEBBI = function(image) {
 };
 
 
-
-
-
-/////////////Exports
+//Exports
 exports.addNDVI = addNDVI;
 exports.calcNDVI = calcNDVI;
 exports.addEVI = addEVI;
