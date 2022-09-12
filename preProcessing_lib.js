@@ -1,10 +1,12 @@
- 
+ /*
 ======================================
 
 ### preProcess_Landsat ###
 Origin Collection: 7
 
 =======================================
+*/
+
 //// Function to Scaling factors - SR ////
 exports.applyScaleFactors = function (image) {
   var opticalBands = image.select('SR_B.').multiply(0.0000275).add(-0.2);
