@@ -144,7 +144,7 @@ var listGrid = [
           'SC-23-V-A','SC-23-V-B','SC-23-V-C','SC-23-V-D','SC-23-X-A','SC-23-X-B','SC-23-X-C','SC-23-X-D','SC-23-Y-A','SC-23-Y-B','SC-23-Y-C','SC-23-Y-D','SC-23-Z-A','SC-23-Z-B','SC-23-Z-C','SC-23-Z-D',
           'SC-24-V-A','SC-24-V-B','SC-24-V-C','SC-24-V-D','SC-24-X-A','SC-24-X-B','SC-24-X-C','SC-24-X-D','SC-24-Y-A','SC-24-Y-B','SC-24-Y-C','SC-24-Y-D','SC-24-Z-A','SC-24-Z-B','SC-24-Z-C','SC-24-Z-D',
           'SC-25-V-A','SC-25-V-C',
-  /*
+  
           'SD-20-V-B','SD-20-X-A','SD-20-X-B','SD-20-X-C','SD-20-X-D','SD-20-Z-B','SD-20-Z-D',
           'SD-21-V-B','SD-21-V-C','SD-21-V-D','SD-21-X-A','SD-21-X-B','SD-21-X-C','SD-21-X-D','SD-21-Y-A','SD-21-Y-B','SD-21-Y-C','SD-21-Y-D','SD-21-Z-A','SD-21-Z-B','SD-21-Z-C','SD-21-Z-D',
           'SD-22-V-A','SD-22-V-B','SD-22-V-C','SD-22-V-D','SD-22-X-A','SD-22-X-B','SD-22-X-C','SD-22-X-D','SD-22-Y-A','SD-22-Y-B','SD-22-Y-C','SD-22-Y-D','SD-22-Z-A','SD-22-Z-B','SD-22-Z-C','SD-22-Z-D',
@@ -165,7 +165,7 @@ var listGrid = [
           'SH-21-V-D','SH-21-X-A','SH-21-X-B','SH-21-X-C','SH-21-X-D','SH-21-Y-B','SH-21-Z-A','SH-21-Z-B','SH-21-Z-C','SH-21-Z-D',
           'SH-22-V-A','SH-22-V-B','SH-22-V-C','SH-22-V-D','SH-22-X-A','SH-22-X-B','SH-22-X-C','SH-22-X-D','SH-22-Y-A','SH-22-Y-B','SH-22-Y-C','SH-22-Y-D','SH-22-Z-A','SH-22-Z-C',
           'SI-22-V-A','SI-22-V-B','SI-22-V-C'
-    */      
+         
   ]
 
 
