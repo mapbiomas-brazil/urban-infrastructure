@@ -6,71 +6,73 @@ Origin Collection: 7
 
 =======================================
 */
+//Requires to pre-process Landsat images
+var F_PreProcess = require("users/Col7/v0:F_PreProcess_Landsat");
+//https://code.earthengine.google.com/eef7d59fdde54723d71b2e9a0d401e22
 
-var F_PreProcess = require("users/mahirye_usp/MapBiomasUrb:AllTools/F_PreProcess_Landsat");
-var F_Indexes = require("users/mahirye_usp/MapBiomasUrb:AllTools/F_Indexes_Landsat"); 
+var F_Indexes = require("users/Col7/v0:F_Indexes_Landsat");
+//https://code.earthengine.google.com/3a6b0549bc64301792e6e78e4a65e76e
 
-
-
+//Function to obtain the mosaic
 var getMosaic = function(year, geometry){
 
+  var BandsSRLT05 = ['SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B7']; // surface reflectance - collection 2
+  var BandsSRLE07 = ['SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B7']; // surface reflectance - collection 2
+  var BandsSRLC08 = ['SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6', 'SR_B7']; // surface reflectance - collection 2
+  var BandsSRRename = ['BLUE', 'GREEN', 'RED', 'NIR', 'SWIR1', 'SWIR2'];
 
-var BandsSRLT05 = ['SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B7']; // surface reflectance - collection 2
-var BandsSRLE07 = ['SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B7']; // surface reflectance - collection 2
-var BandsSRLC08 = ['SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6', 'SR_B7']; // surface reflectance - collection 2
-var BandsSRRename = ['BLUE', 'GREEN', 'RED', 'NIR', 'SWIR1', 'SWIR2'];
+  var BandsRawLT05 = ['B4', 'B5', 'B6']; // raw image - collection 1
+  var BandsRawLE07 = ['B4', 'B5', 'B6_VCID_1']; // raw image - collection 2
+  var BandsRawLC08 = ['B5', 'B6', 'B10']; // raw image - collection 2
+  var BandsRawRename = ['NIR', 'MIR', 'TIR'];
 
-var BandsRawLT05 = ['B4', 'B5', 'B6']; // raw image - collection 1
-var BandsRawLE07 = ['B4', 'B5', 'B6_VCID_1']; // raw image - collection 2
-var BandsRawLC08 = ['B5', 'B6', 'B10']; // raw image - collection 2
-var BandsRawRename = ['NIR', 'MIR', 'TIR'];
+  var bandsRF = [
+                 "BLUE_median"
+                 ,"GREEN_median"
+                 ,"RED_median"
+                 ,"NIR_median"
+                 ,"SWIR1_median"
+                 ,"SWIR2_median"
+                 ,"NDVI_median"
+                 ,"EVI_median"
+                 ,"EVI2_median"
+                 ,"MNDWI_median"
+                 ,"NDWIm_median"
+                 ,"NDBI_median"
+                 ,"NBR_median"
+                 ,"NDRI_median"
+                 ,"BAI_median"
+                 ,"UI_median"
+                 ,"NDUI_median"
+                 ,"BSI_median"
+                 ,"GV_median"
+                 ,"NPV_median"
+                 ,"SOIL_median"
+                 ,"CLOUD_median"
+                 ,"GVS_median"
+                 ,"SHADE_median"
+                 ,"SUBS_median"
+                 ,"VEG_median"
+                 ,"DARK_median"
+                 ,"BU_median"
+                 ,"NDFI_median"
+                 ,"EVI_p10"
+                 ,"EVI_p90"
+                 ,"EVI_dif9010"
+                 ,"EVI2_p10"
+                 ,"EVI2_p90"
+                 ,"EVI2_dif9010"
+                 ,"EBBI_median"
+                 ,"EBBI_p90"
+                 ,"EBBI_p25"
+                 ,"EBBI_dif7525"
+                 ,"EBBIsNeg_median"
+                 ,"EBBIsNeg_p75"
+                 ,"EBBIsNeg_p25"
+                 ,"EBBIsNeg_dif7525"
+                 ];
 
-var bandsRF = [
-               "BLUE_median"
-               ,"GREEN_median"
-               ,"RED_median"
-               ,"NIR_median"
-               ,"SWIR1_median"
-               ,"SWIR2_median"
-               ,"NDVI_median"
-               ,"EVI_median"
-               ,"EVI2_median"
-               ,"MNDWI_median"
-               ,"NDWIm_median"
-               ,"NDBI_median"
-               ,"NBR_median"
-               ,"NDRI_median"
-               ,"BAI_median"
-               ,"UI_median"
-               ,"NDUI_median"
-               ,"BSI_median"
-               ,"GV_median"
-               ,"NPV_median"
-               ,"SOIL_median"
-               ,"CLOUD_median"
-               ,"GVS_median"
-               ,"SHADE_median"
-               ,"SUBS_median"
-               ,"VEG_median"
-               ,"DARK_median"
-               ,"BU_median"
-               ,"NDFI_median"
-               ,"EVI_p10"
-               ,"EVI_p90"
-               ,"EVI_dif9010"
-               ,"EVI2_p10"
-               ,"EVI2_p90"
-               ,"EVI2_dif9010"
-               ,"EBBI_median"
-               ,"EBBI_p90"
-               ,"EBBI_p25"
-               ,"EBBI_dif7525"
-               ,"EBBIsNeg_median"
-               ,"EBBIsNeg_p75"
-               ,"EBBIsNeg_p25"
-               ,"EBBIsNeg_dif7525"
-               ];
-               
+  // Create an image collection from Landsat 5 SR             
   var datasetSR_LT05 = ee.ImageCollection("LANDSAT/LT05/C02/T1_L2")
      .filterDate(year+'-01-01', year+'-12-31')
      .filterBounds(geometry)
@@ -84,6 +86,7 @@ var bandsRF = [
   //  print(datasetSR_LT05.first(), "first of datasetSR_LT05 Clean");
   //  Map.addLayer (datasetSR_LT05, {}, "datasetSR_LT05 Clean");
 
+  // Create an image collection from Landsat 7 SR             
   var datasetSR_LE07 = ee.ImageCollection("LANDSAT/LE07/C02/T1_L2")
      .filterDate(year+'-01-01', year+'-12-31')
      .filterBounds(geometry)
@@ -95,7 +98,8 @@ var bandsRF = [
   //  print(datasetSR_LE07.size(), "size of datasetSR_LE07 Clean");
   //  print(datasetSR_LE07.first(), "first of datasetSR_LE07 Clean");
   //  Map.addLayer (datasetSR_LE07, {}, "datasetSR_LE07 Clean");
-
+ 
+  // Create an image collection from Landsat 8 SR             
   var datasetSR_LC08 = ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
       .filterDate(year+'-01-01', year+'-12-31')
       .filterBounds(geometry)
@@ -113,11 +117,12 @@ var bandsRF = [
   //  print(datasetSR.first(), "first of datasetSR Clean");
   //  Map.addLayer (datasetSR, {}, "datasetSR Clean");
 
+  //Merge the image collections from L5, L7 e L8
   var datasetSR_median = datasetSR.reduce(ee.Reducer.median()).multiply(1000).toUint16();
-//  Map.addLayer (datasetSR_median, {}, "datasetSR_median");
+  // Map.addLayer (datasetSR_median, {}, "datasetSR_median");
 
 
-/////////////Make ImageCollection - Raw
+  // Create an image collection from Landsat 5 RAW             
   var datasetRaw_LT05 = ee.ImageCollection("LANDSAT/LT05/C01/T1")
       .filterDate(year+'-01-01', year+'-12-31')
       .filterBounds(geometry)
@@ -130,7 +135,8 @@ var bandsRF = [
   //  print(datasetRaw_LT05.size(), "size of datasetRaw_LT05 Clean");
   //  print(datasetRaw_LT05.first(), "first of datasetRaw_LT05 Clean");
   //  Map.addLayer(datasetRaw_LT05.first(), {}, "first of datasetRaw_LT05 Clean");
-
+  
+  // Create an image collection from Landsat 7 RAW
   var datasetRaw_LE07 = ee.ImageCollection("LANDSAT/LE07/C02/T1")
       .filterDate(year+'-01-01', year+'-12-31')
       .filterBounds(geometry)
@@ -143,7 +149,8 @@ var bandsRF = [
   //  print(datasetRaw_LE07.size(), "size of datasetRaw_LE07 Clean");
   //  print(datasetRaw_LE07.first(), "first of datasetRaw_LE07 Clean");
   //  Map.addLayer(datasetRaw_LE07.first(), {}, "first of datasetRaw_LE07 Clean");
-
+  
+  // Create an image collection from Landsat 8 RAW
   var datasetRaw_LC08 = ee.ImageCollection("LANDSAT/LC08/C02/T1")
      .filterDate(year+'-01-01', year+'-12-31')
      .filterBounds(geometry)
@@ -156,7 +163,8 @@ var bandsRF = [
   //  print(datasetRaw_LC08.size(), "size of datasetRaw_LC08 Clean");
   //  print(datasetRaw_LC08.first(), "first of datasetRaw_LC08 Clean");
   //  Map.addLayer(datasetRaw_LC08.first(), {}, "first of datasetRaw_LC08 Clean");
-
+  
+  // Merge the image collections from Landsat raw images
   var datasetRaw = datasetRaw_LT05.merge(datasetRaw_LE07.merge(datasetRaw_LC08));
   //  print(datasetRaw.size(), "size of datasetRaw Clean");
   //  print(datasetRaw.first(), "first of datasetRaw Clean");
@@ -166,7 +174,7 @@ var bandsRF = [
   //  Map.addLayer (datasetRaw_median, {}, "datasetRaw_median");
 
 
-/////////////Calculate Indexes
+//Calculate Indexes and add them as bands to the mosaic
   var datasetSR_indexes1 = datasetSR_median
                                 .addBands(datasetSR.map(F_Indexes.calcNDVI).reduce(ee.Reducer.median()).add(1).multiply(1000).toUint16())
                                 .addBands(datasetSR.map(F_Indexes.calcEVI).reduce(ee.Reducer.median()).add(1).multiply(1000).toUint16())
@@ -223,7 +231,7 @@ var bandsRF = [
   //  Map.addLayer(EBBIs, viz_EBBI, "EBBIs", false);
 
 
-  ///////////// Make Final Mosaic 
+  // Create the Final Mosaic 
   var col = datasetSR_indexes1.addBands(BU).addBands(NDFI).addBands(EVIs).addBands(EVI2s).addBands(EBBIs);
   //  print(col, "col");
   //  Map.addLayer(col, {}, "col", true);
@@ -231,4 +239,5 @@ var bandsRF = [
   return col
 }
 
+// Exports the mosaic functions
 exports.getMosaic = getMosaic
