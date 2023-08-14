@@ -49,9 +49,9 @@ _Table 2 - Spatial and temporal classification codes._
 <br/>
 
 ## Other information
-The urban areas are classified according to land use and land cover samples assumed as reference. They are composed of randomly distributed points across the Brazilian territory and each one contains a database that includes a library of variables, such as spectral indices and landsat bands values about the class to which they belong. <br/>
+The urban areas are classified according to land use and land cover samples assumed as reference. They are composed of randomly distributed points across the Brazilian territory and each one contains a database that includes a library of variables, such as spectral indices and landsat bands values about the class to which they belong. More information about how they are generated and validated can be found in the ATBD. <br/>
 
-The classification is based on polygons according to the International Millionth Map of the World over the interest territory. Also, hexagons where possible urban areas can be found were used to limit the territory to be classified. These areas combined were adopted as the processing unit. These spatial sections are necessary to operate the classification in the face of GEE memory limits. <br/>
+The classification is based on polygons according to the International Millionth Map of the World over the interest territory. Also, hexagons where possible urban areas can be found were used to limit the territory to be classified. These areas combined were adopted as the processing unit and they are necessary to operate the classification within GEE memory limits. <br/>
 
 # Start the classification process
 ## Start processing the classification_batch.js script
@@ -84,8 +84,7 @@ _Table 3 - Temporal filters._
 |**[temporal_filter-1.js](temporal_filter-1.js)**| This filter (TF1) considers results from spatial filters. <br/> 
 |**[temporal_filter-2.js](temporal_filter-2.js)**| This filter (TF2) considers results from TF1. <br/> 
 |**[temporal_filter-3.js](temporal_filter-3.js)**| This filter (TF3) considers results from TF2. <br/> 
-|**[temporal_filter-4.js](temporal_filter-4.js)**| This filter (TF4) considers results from TF3.
-<br/>
+|**[temporal_filter-4.js](temporal_filter-4.js)**| This filter (TF4) considers results from TF3. <br/>
 
 # Visualization codes
 For each filter you can put the map on screen through a simple function exemplified below. You have to define a list of years and also the assets where you saved the results.<br/>
