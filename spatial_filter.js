@@ -23,7 +23,6 @@ var geometry =
 var infraprob = ee.ImageCollection('projects/mapbiomas-workspace/TRANSVERSAIS/INFRAURBANA8_1-Prob')
 var hexag = ee.FeatureCollection('projects/mapbiomas-workspace/TRANSVERSAIS/INFRAURBANA5/cartas_hex_col')
 var cartasIBGE = ee.FeatureCollection('projects/mapbiomas-workspace/AUXILIAR/cartas').filterBounds(hexag)
-                   .filter(ee.Filter.inList('grid_name', cartsasToReprocess))
 
 //batch
 var batch = require('users/edimilsonrodriguessantos/mapbiomas:Col8/batch.js') 
