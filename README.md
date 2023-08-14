@@ -60,7 +60,7 @@ In this script, a classification process using Random Forest is carried out. All
 Code: **[classification_batch.js](classification_batch.js)**
 
 ## Best threshold calculation
-Since the image classified is expressed in terms of probability to be urban, it is possible to select a value from which the classification is assumed as urban. This is processed by estimating a best probability to each polygon as defined previously considering probabilities from 25% to 75% (i. e. above 75% the map is assumed as urban). This product will be submitted to the temporal filter, when other reference maps will operate as boolean layers defining patches where urban areas can be found.<br/>
+Since the image classified is expressed in terms of probability to be urban, it is possible to select a value from which the classification is assumed as urban. This is processed by estimating a best probability to each polygon as defined previously considering probabilities from 25% to 75% (i. e. above 75% the map is assumed as urban). This product will be submitted to the spatial filter, when other reference maps will operate as boolean layers defining patches where urban areas can be found.<br/>
 
 Code: **[best_thresholds.js](best_thresholds.js)**
 ## Start spatial filters
