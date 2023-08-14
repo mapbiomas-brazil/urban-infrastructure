@@ -4,7 +4,6 @@
 Origin Collection: 6
 # Notes
 - Remember to Change asset path in ExportImage function (assetID)
-- Forms for reporting bugs and suggestions link: https://forms.gle/BJZbeZjYA5prQYACA
 =======================================
 */
 var geometry = 
