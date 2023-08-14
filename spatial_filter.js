@@ -33,12 +33,7 @@ var extraGrid = ee.Dictionary.fromLists(keys, values).getInfo()
 var extraVersion = '7'
 
 //Defines the list of years considered and separates the initial and final years
-//var listYears = ee.List.sequence(1985, 1994).getInfo()//Breno
-// var listYears = ee.List.sequence(1985, 2022).getInfo()//Julio
-//var listYears = ee.List.sequence(2004, 2014).getInfo()//Ed
-//var listYears = ee.List.sequence(2015, 2021).getInfo()//Eduardo
-var listYears = [2020] //teste
-// var listYears = ee.List.sequence(1985, 2022).getInfo()
+var listYears = ee.List.sequence(1985, 2022).getInfo()
 
 //================================================================================================
 //>>>>>>>>>>LEMBRE-SE DE VERIFICAR AS VERSÕES DE ENTRADA, SAÍDA, LIMIARES E DESCRIÇÃO<<<<<<<<<<<
@@ -51,7 +46,7 @@ var NL_threshold = 1
 var lowNL_threshold = 0.5
 var irs_threshold = 500
 
-// municipios com baixa luz noturna
+// municipalities with low night light
 var mun_lowNL = [
  '1200328', '1200435', '1301951', '1600550', '2907400', '2106359', '2109759', '2110237', '3145406', '3147501', '3157278',
  '3157377', '3159506', '3163508', '3164803', '1506401', '2200954', '2201988', '2202075', '2202539', '2202653', '2203420',
@@ -60,7 +55,7 @@ var mun_lowNL = [
  '1706258', '1711951', '1718501', '4202099', '4215604', '4300001', '4304853', '4306353', '4306429', '4310652', '4311239',
  '4311734', '4312377', '4312674', '4313334', '4313391', '4314175', '4314555', '4317954', '4320321', 
 
- // Municípios inseridos no reprocessamento 
+ // municipalities included in reprocessing 
  '1303601', // Santa Isabel do Rio Negro (AM)
  '5107776', // Santa Terezinha (MT)
  '1502509', // Chaves (PA)
