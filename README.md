@@ -94,7 +94,7 @@ var FT_result = "write here the asset address of the image Collection considered
 var years = ["write here the list of years separated by commas"]
 
 var FTn_results = function(year){
-  var grN_V = “-gr1-1” 	//Here, write the name of filters result you would like to put in GEE screen
+  var grN_V = “-FT1-1” 	//Here, write the name of the filter you would like to put in GEE screen
   var img = ee.Image(FT_result + year + grN_V)
   Map.addLayer(img, {bands: "remapped", min: 0, max: 1, palette: [“black”, “red”], opacity: 0.40}, grN_V + “-” +year) //Here you can specify visualizations parameters.
  return
